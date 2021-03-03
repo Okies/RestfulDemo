@@ -5,13 +5,12 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
-@Table(name= "tbl_board")
 @ToString
 @Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Board {
+public class Board extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

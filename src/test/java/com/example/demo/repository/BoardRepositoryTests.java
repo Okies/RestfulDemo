@@ -1,6 +1,8 @@
 package com.example.demo.repository;
 
+import com.example.demo.dto.BoardDTO;
 import com.example.demo.entity.Board;
+import com.example.demo.service.BoardServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,6 +22,9 @@ public class BoardRepositoryTests {
     @Autowired
     BoardRepository boardRepository;
 
+    @Autowired
+    BoardServiceImpl boardServiceImpl;
+
     @Test
     public void testInsertDummies() {
 
@@ -36,13 +41,11 @@ public class BoardRepositoryTests {
 
     @Transactional
     @Test
-    public void testQueryMethods() {
-        boardRepository.deleteByBidAndPassword(1L, "Sample Password...1");
+    public void testDelete() {
+        List<BoardDTO> list = boardServiceImpl.delete(1L, "Sample Password...1");
 
-        List<Board> list = boardRepository.findAll();
-
-        for (Board board : list) {
-            System.out.println(board);
+        for (BoardDTO dto : list) {
+            System.out.println(dto);
         }
     }
 }

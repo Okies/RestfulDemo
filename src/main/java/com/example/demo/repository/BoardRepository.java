@@ -13,8 +13,4 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     Board findByBid(Long bid);
 
     void deleteByBidAndPassword(Long bid, String password);
-
-    List<Board> findByBidBetweenOrderByBidDesc(Long from, Long to);
-
-    Page<Board> findByBidBetween(Long from, Long to, Pageable pageable);
 }
