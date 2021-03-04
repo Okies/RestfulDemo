@@ -13,30 +13,6 @@ public interface BoardService {
 
     BoardDTO register(BoardDTO dto);
 
-    List<BoardDTO> delete(Long bid, String password);
+    void delete(Long bid, String password);
 
-    default BoardDTO entityToDto(Board entity) {
-
-        BoardDTO dto = BoardDTO.builder()
-                .bid(entity.getBid())
-                .title(entity.getTitle())
-                .content(entity.getContent())
-                .createdId(entity.getCreatedId())
-                .build();
-
-        return dto;
-    }
-
-    default Board dtoToEntity(BoardDTO dto) {
-
-        Board entity = Board.builder()
-                .bid(dto.getBid())
-                .title(dto.getTitle())
-                .content(dto.getContent())
-                .createdId(dto.getCreatedId())
-                .password(dto.getPassword())
-                .build();
-
-        return entity;
-    }
 }

@@ -1,17 +1,18 @@
 package com.example.demo.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class BoardDTO {
 
-    private Long bid;
+    private Long id;
 
     private String title;
 
@@ -19,5 +20,6 @@ public class BoardDTO {
 
     private String createdId;
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String password;
 }

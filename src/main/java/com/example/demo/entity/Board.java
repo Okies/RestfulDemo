@@ -8,13 +8,13 @@ import javax.persistence.*;
 @ToString
 @Getter
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
-public class Board extends BaseEntity{
+@AllArgsConstructor
+public class Board extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long bid;
+    private Long id;
 
     @Column(length = 200, nullable = false)
     private String title;

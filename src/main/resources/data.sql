@@ -1,0 +1,5 @@
+insert into board (title, content, created_id, password) values ('Sample Title', 'Sample Content', 'Sample CreateId', 'Sample Password')
+insert into board (title, content, created_id, password) values ('Sample Title', 'Sample Content', 'Sample CreateId', 'Sample Password')
+insert into board (title, content, created_id, password) values ('Sample Title', 'Sample Content', 'Sample CreateId', 'Sample Password')
+insert into board (title, content, created_id, password) values ('Sample Title', 'Sample Content', 'Sample CreateId', 'Sample Password')
+insert into board (title, content, created_id, password) values ('Sample Title', 'Sample Content', 'Sample CreateId', 'Sample Password')

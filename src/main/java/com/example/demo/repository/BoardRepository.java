@@ -7,10 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface BoardRepository extends JpaRepository<Board, Long> {
-
-    Board findByBid(Long bid);
-
-    void deleteByBidAndPassword(Long bid, String password);
+    Optional<Board> findById(Long id);
 }

@@ -3,40 +3,77 @@ package com.example.demo.service;
 import com.example.demo.dto.BoardDTO;
 import com.example.demo.entity.Board;
 import com.example.demo.repository.BoardRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class BoardServiceImpl implements BoardService{
-
-    @Autowired
-    BoardRepository boardRepository;
+    private final BoardRepository boardRepository;
 
     @Override
     public List<BoardDTO> getBoards() {
 
-        return boardRepository.findAll().stream().map(this::entityToDto).collect(Collectors.toList());
+        return boardRepository.findAll().stream()
+                .map(this::entityToDtoWithoutPassword)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public BoardDTO getBoard(Long bid) {
+    public BoardDTO getBoard(Long id) {
+        Optional<Board> boardOptional = boardRepository.findById(id);
 
-        return entityToDto(boardRepository.findByBid(bid));
+        if (boardOptional.isEmpty()) {
+            throw new RuntimeException("not found");
+        }
+
+        return entityToDtoWithoutPassword(boardOptional.get());
     }
 
     @Override
-    public BoardDTO register(BoardDTO dto) {
-        return entityToDto(boardRepository.save(dtoToEntity(dto)));
+    public BoardDTO register(BoardDTO boardDTO) {
+        return entityToDtoWithoutPassword(boardRepository.save(dtoToEntity(boardDTO)));
     }
 
     @Override
-    public List<BoardDTO> delete(Long bid, String password) {
+    public void delete(Long id, String password) {
+        Optional<Board> boardOptional = boardRepository.findById(id);
 
-        boardRepository.deleteByBidAndPassword(bid, password);
+        if (boardOptional.isEmpty()) {
+            throw new RuntimeException("not found");
+        }
 
-        return boardRepository.findAll().stream().map(this::entityToDto).collect(Collectors.toList());
+        Board board = boardOptional.get();
+
+        if (!board.getPassword().equals(password)) {
+            throw new RuntimeException("password not matched");
+        }
+
+        boardRepository.delete(board);
+    }
+
+    private BoardDTO entityToDtoWithoutPassword(Board board) {
+
+        return BoardDTO.builder()
+                .id(board.getId())
+                .title(board.getTitle())
+                .content(board.getContent())
+                .createdId(board.getCreatedId())
+                .build();
+    }
+
+    private Board dtoToEntity(BoardDTO dto) {
+
+        return Board.builder()
+                .id(dto.getId())
+                .title(dto.getTitle())
+                .content(dto.getContent())
+                .createdId(dto.getCreatedId())
+                .password(dto.getPassword())
+                .build();
     }
 }
